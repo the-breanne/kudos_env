@@ -26,6 +26,7 @@ class Employee(models.Model):
 
 
 
+
 class Task(models.Model):
     name = models.CharField(max_length=50, default='')
     description = models.CharField(max_length=400, default='')
@@ -50,17 +51,16 @@ class Feedback(models.Model):
   emp_name = models.CharField(max_length=50, default='')
   mang_name = models.CharField(max_length=50, default='')
   message = models.CharField(max_length=500, default='')
-  requested_date = models.DateTimeField(
-    default=timezone.now)
-  created_date = models.DateTimeField(default=timezone.now)
+  requested_date = models.DateField(default=timezone.now)
+  created_date = models.DateField(default=timezone.now, blank=True, null=True)
 
   def created(self):
-      self.created_date = timezone.now()
-      self.save()
+    self.created_date = timezone.now()
+    self.save()
 
-  def updated(self):
-      self.updated_date = timezone.now()
-      self.save()
+  def requested(self):
+    self.requested_date = timezone.now()
+    self.save()
 
   def __str__(self):
       return str(self.message)
@@ -74,17 +74,15 @@ class Meeting(models.Model):
   emp_name = models.CharField(max_length=50, default='')
   mang_name = models.CharField(max_length=50, default='')
   message = models.CharField(max_length=500, default='')
-  requested_date = models.DateTimeField(
-    default=timezone.now)
-  created_date = models.DateTimeField(default=timezone.now)
-
-
-  def requested(self):
-    self.requested_date = timezone.now()
-    self.save()
+  requested_date = models.DateField(default=timezone.now)
+  created_date = models.DateField(default=timezone.now, blank=True, null=True)
 
   def created(self):
     self.created_date = timezone.now()
+    self.save()
+
+  def requested(self):
+    self.requested_date = timezone.now()
     self.save()
 
   def __str__(self):
